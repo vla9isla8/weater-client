@@ -1,6 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import Weather from "./Weather";
+import {Table, TableBody, TableCell, TableHead, TableRow, Paper} from '@material-ui/core';
 
 class Forecast extends React.Component {
     static defaultProps = {
@@ -13,18 +14,18 @@ class Forecast extends React.Component {
             return "";
         }
         const data = Object.values(this.props.forecast);
-        const head = (<tr><th/>{dates.map((date,key) => (<th key={key}>{date}</th>))}</tr>);
+        const head = (<TableRow><TableCell/>{dates.map((date,key) => (<TableCell key={key}>{date}</TableCell>))}</TableRow>);
         const rows = this.props.providers.map((provider,key) => {
-            const row = data.map((dateData,key) => (<td key={key}>{<Weather {...dateData[provider]} />}</td>));
-            return (<tr key={key}><td>{provider}</td>{row}</tr>);
+            const row = data.map((dateData,key) => (<TableCell key={key}>{<Weather {...dateData[provider]} />}</TableCell>));
+            return (<TableRow key={key}><TableCell>{provider}</TableCell>{row}</TableRow>);
         });
         return (
-            <div>
-                <table>
-                    <thead>{head}</thead>
-                    <tbody>{rows}</tbody>
-                </table>
-            </div>
+            <Paper>
+                <Table>
+                    <TableHead>{head}</TableHead>
+                    <TableBody>{rows}</TableBody>
+                </Table>
+            </Paper>
         );
     }
 }
