@@ -1,28 +1,38 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
+import SearchForm from './components/SearchForm'
 import './App.css';
+import Forecast from "./components/Forecast";
+import {searchForecast} from './actions';
+import {connect} from "react-redux";
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+        <div className="App">
+            <SearchForm onSubmit={this.props.searchForecast}/>
+            <Forecast/>
+            <div className="error">{this.props.forecastError}</div>
+            <div className="error">{this.props.providersError}</div>
+        </div>
     );
   }
 }
+const mapStateToProps = state => {
+    return {
+        forecastError: state.forecastError,
+        providersError: state.providersError,
+    }
+};
+const mapDispatchToProps = dispatch => {
+    return {
+        searchForecast: (values) => {
+            dispatch(searchForecast(values))
+        }
+    }
+};
+App = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(App);
 
 export default App;

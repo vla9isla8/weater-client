@@ -1,0 +1,1 @@
+docker run --name=weather-client --restart=always -d -p 8888:80 vla9sla8/weather-client

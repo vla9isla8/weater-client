@@ -1,0 +1,1 @@
+docker build . -t val9sla8/weather-client
