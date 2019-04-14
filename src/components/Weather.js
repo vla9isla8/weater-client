@@ -3,8 +3,8 @@ export default class Weather extends React.Component {
     render() {
         return (
             <div>
-                <div>{this.props.dayTemperature}</div>
-                <div>{this.props.nightTemperature}</div>
+                <div>Day: {this.props.dayTemperature}</div>
+                <div>Night: {this.props.nightTemperature}</div>
             </div>
         );
     }

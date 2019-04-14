@@ -1,20 +1,23 @@
+const hostname = window.location.hostname;
+const baseUrl = process.env.NODE_ENV !== 'production' ? "http://192.168.1.100:4000/api" : "http://" + hostname + ":4000/api/";
+
 export const searchForecast = ({city,days}) => {
     return  (dispatch) => {
-        const hostname = window.location.hostname;
         dispatch({
             type: "SEARCH_FORM_SUBMIT",
             city,
             days,
             loading: true
         });
-        let forecastUrl = "http://" + hostname + ":4000/api/weather/forecast";
-        if(city) {
+
+        const providersUrl =  baseUrl + "/weather/providers";
+        let forecastUrl = baseUrl + "/weather/forecast";
+        if (city) {
             forecastUrl += "?city=" + city;
             if (days) {
                 forecastUrl += "&days=" + days;
             }
         }
-        const providersUrl = "http://"+hostname+":4000/api/weather/providers";
         fetch(forecastUrl)
             .then(
                 response => {

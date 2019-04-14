@@ -2,12 +2,12 @@ version: '3.1'
 
 services:
   weather-spring-api:
-    image: vla9isla8/weather-server
+    image: vla9isla8/weather-server:latest
     restart: always
     ports:
     - 4000:8080
   weather-client:
-    image: vla9isla8/weather-client
+    image: vla9isla8/weather-client:latest
     restart: always
     ports:
     - 8888:80
