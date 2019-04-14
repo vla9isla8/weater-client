@@ -1,19 +1,20 @@
 export const searchForecast = ({city,days}) => {
     return  (dispatch) => {
+        const hostname = window.location.hostname;
         dispatch({
             type: "SEARCH_FORM_SUBMIT",
             city,
             days,
             loading: true
         });
-        let forecastUrl = "http://localhost:4000/api/weather/forecast";
+        let forecastUrl = "http://" + hostname + ":4000/api/weather/forecast";
         if(city) {
             forecastUrl += "?city=" + city;
             if (days) {
                 forecastUrl += "&days=" + days;
             }
         }
-        const providersUrl = "http://localhost:4000/api/weather/providers";
+        const providersUrl = "http://"+hostname+":4000/api/weather/providers";
         fetch(forecastUrl)
             .then(
                 response => {

@@ -50,27 +50,26 @@ class SearchForm extends Component {
         return (
             <form className={this.props.classes.container} onSubmit={this.handleSubmit}>
                 <FormControl>
-
-                <TextField
-                    label="City"
-                    className={this.props.classes.textField}
-                    value={this.state.city}
-                    margin="normal"
-                    onChange={this.handleCityChange}
-                    name="city"
-                    type="text"
-                />
-                <TextField
-                    className={this.props.classes.textField}
-                    label="Days"
-                    margin="normal"
-                    value={this.state.days}
-                    onChange={this.handleDaysChange}
-                    type="number"
-                    name="days"
-                />
-                <Button type="submit">Search</Button>
-            </FormControl>
+                    <TextField
+                        label="City"
+                        className={this.props.classes.textField}
+                        value={this.state.city}
+                        margin="normal"
+                        onChange={this.handleCityChange}
+                        name="city"
+                        type="text"
+                    />
+                    <TextField
+                        className={this.props.classes.textField}
+                        label="Days"
+                        margin="normal"
+                        value={this.state.days}
+                        onChange={this.handleDaysChange}
+                        type="number"
+                        name="days"
+                    />
+                    <Button type="submit">Search</Button>
+                </FormControl>
             </form>
 
         )

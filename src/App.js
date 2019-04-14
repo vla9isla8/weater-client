@@ -21,10 +21,10 @@ class App extends Component {
       return (
         <div className={this.props.classes.root} >
             <Grid container spacing={24} >
-                <Grid item md={12}>
+                <Grid item md={3} zeroMinWidth>
                     <SearchForm onSubmit={this.props.searchForecast}/>
                 </Grid>
-                <Grid item md={12}>
+                <Grid item md={9} zeroMinWidth>
                     <Forecast/>
                 </Grid>
                 <Grid item md={12}>
