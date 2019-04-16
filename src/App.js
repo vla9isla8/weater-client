@@ -24,10 +24,10 @@ class App extends Component {
       return <React.Fragment>
         {loading && <LinearProgress className={classes.loader}/>}
         <Grid container spacing={16} className={classes.root} >
-            <Grid item xs={12} sm={4}>
+            <Grid item xs={12} md={4}>
                 <SearchForm onSubmit={this.searchForecast}/>
             </Grid>
-            <Grid item xs={12} sm={8} zeroMinWidth>
+            <Grid item xs={12} md={8} zeroMinWidth>
                 <Forecast/>
             </Grid>
             <Grid item xs={12}>
