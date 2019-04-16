@@ -15,7 +15,7 @@ export const searchForecast = ({city,days}) => {
             const {data} = await axios.get(forecastUrl);
             return dispatch(setForcast(data));
         } catch ({message,response}) {
-            return dispatch(setError(response.data.message));
+            return dispatch(setError(response ? response.data.message : message));
         } finally {
             dispatch(setLoading(false));
         }
@@ -29,7 +29,7 @@ export const getProviders = () => {
             const {data} = await axios.get(providersUrl);
             return dispatch(setProviders(data));
         } catch ({message,response}) {
-            return dispatch(setError(response.data.message));
+            return dispatch(setError(response ? response.data.message : message));
         }
     }
 };

@@ -4,6 +4,7 @@ COPY package.json yarn.lock ./
 RUN yarn
 COPY src ./src
 COPY public ./public
+COPY .env.production ./.env.production
 RUN yarn build
 
 # Stage 2 - the production environment
