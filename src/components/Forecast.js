@@ -19,8 +19,7 @@ const weatherParams = [
 
 const styles = theme => ({
     tableWrapper: {
-        padding: theme.spacing.unit,
-        overflowX: 'auto',
+        overflowX: 'auto'
     }
 });
 
