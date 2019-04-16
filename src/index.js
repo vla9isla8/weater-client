@@ -8,9 +8,13 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import {createMuiTheme} from '@material-ui/core/styles';
-
+import "./index.css";
 const theme = createMuiTheme({
+    typography: {
+        useNextVariants: true,
+    },
     palette: {
+        type: "light",
         primary: {
             light: '#757ce8',
             main: '#3f50b5',
@@ -22,7 +26,7 @@ const theme = createMuiTheme({
             main: '#f44336',
             dark: '#ba000d',
             contrastText: '#000',
-        },
+        }
     },
 });
 const store = createStore(reducers,applyMiddleware(thunkMiddleware));
@@ -39,4 +43,4 @@ ReactDOM.render(
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.unregister();
+serviceWorker.register();

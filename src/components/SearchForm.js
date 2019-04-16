@@ -1,32 +1,31 @@
-import React, {Component} from 'react';
-import {Button, TextField, withStyles,FormControl} from '@material-ui/core';
+import React, {PureComponent} from 'react';
+import {Button, TextField, withStyles,FormControl,Paper} from '@material-ui/core';
 import PropTypes from 'prop-types';
+import {searchForecast, getProviders} from "../actions";
+import {connect} from "react-redux";
 
 const styles = theme => ({
     container: {
+        padding: theme.spacing.unit
+    },
+    root: {
         display: 'flex',
-        flexWrap: 'wrap',
+        justifyContent: "center"
     },
     textField: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
-        width: 200,
-    },
-    dense: {
-        marginTop: 19,
-    },
-    menu: {
-        width: 200,
-    },
+    }
 });
 
-class SearchForm extends Component {
+class SearchForm extends PureComponent {
     state = {
         city: localStorage.getItem("city") || "",
         days: localStorage.getItem("days") || 7
     };
     componentDidMount = () => {
-        this.props.onSubmit({city:this.state.city, days: this.state.days});
+        this.props.getProviders();
+        this.props.searchForecast({city:this.state.city, days: this.state.days});
     };
     handleCityChange = (e) => {
         const value = e.target.value;
@@ -44,32 +43,39 @@ class SearchForm extends Component {
     };
     handleSubmit = (e) => {
         e.preventDefault();
-        this.props.onSubmit({city:this.state.city, days: this.state.days});
+        this.props.searchForecast({city:this.state.city, days: this.state.days});
     };
     render() {
+        const {classes} = this.props;
+        const {city,days} = this.state;
         return (
-            <form className={this.props.classes.container} onSubmit={this.handleSubmit}>
-                <FormControl>
-                    <TextField
-                        label="City"
-                        className={this.props.classes.textField}
-                        value={this.state.city}
-                        margin="normal"
-                        onChange={this.handleCityChange}
-                        name="city"
-                        type="text"
-                    />
-                    <TextField
-                        className={this.props.classes.textField}
-                        label="Days"
-                        margin="normal"
-                        value={this.state.days}
-                        onChange={this.handleDaysChange}
-                        type="number"
-                        name="days"
-                    />
-                    <Button type="submit">Search</Button>
-                </FormControl>
+            <form onSubmit={this.handleSubmit}>
+                <Paper className={classes.container}>
+                    <FormControl classes={{
+                        root: classes.root
+                    }}>
+                        <TextField
+                            required
+                            label="Город"
+                            className={classes.textField}
+                            value={city}
+                            margin="normal"
+                            onChange={this.handleCityChange}
+                            name="city"
+                            type="text"
+                        />
+                        <TextField
+                            className={classes.textField}
+                            label="Дней"
+                            margin="normal"
+                            value={days}
+                            onChange={this.handleDaysChange}
+                            type="number"
+                            name="days"
+                        />
+                        <Button type="submit">Search</Button>
+                    </FormControl>
+                </Paper>
             </form>
 
         )
@@ -78,5 +84,8 @@ class SearchForm extends Component {
 SearchForm.propTypes = {
     classes: PropTypes.object.isRequired,
 };
-
-export default withStyles(styles)(SearchForm);
+const mapDispatchTiProps = {
+    searchForecast,
+    getProviders
+}
+export default connect(null, mapDispatchTiProps)(withStyles(styles)(SearchForm));

@@ -7,17 +7,11 @@ import "moment/locale/ru";
 
 moment.locale('ru');
 const styles = theme => ({
-    root: {
-      width: '100%',
-      marginTop: theme.spacing.unit * 3,
-    },
-    table: {
-      minWidth: 1020,
-    },
     tableWrapper: {
-      overflowX: 'auto',
-    },
-  });
+        padding: theme.spacing.unit,
+        overflowX: 'auto',
+    }
+});
 
 class Forecast extends React.PureComponent {
     static defaultProps = {
@@ -25,31 +19,42 @@ class Forecast extends React.PureComponent {
         providers: []
     };
     render() {
-        const {classes} = this.props;
-        const dates = Object.keys(this.props.forecast);
-        if(!dates.length) {
-            return "";
+        const {classes,forecast} = this.props;
+        if (!forecast && !forecast.lenght) {
+            return <span>Not Found</span>;
         }
-        const data = Object.values(this.props.forecast);
-        const head = (<TableRow><TableCell/>{dates.map((date,key) => <TableCell key={key}>{moment(date).format("L")}</TableCell>)}</TableRow>);
-        const rows = this.props.providers.map((provider,key) => {
-            const row = data.map((dateData,key) => (<TableCell key={key}>{<Weather {...dateData[provider]} />}</TableCell>));
-            return (<TableRow key={key}><TableCell>{provider}</TableCell>{row}</TableRow>);
-        });
         return (
             <Paper className={classes.tableWrapper}>
                 <Table>
-                    <TableHead>{head}</TableHead>
-                    <TableBody>{rows}</TableBody>
+                    <TableHead>{this.getHead()}</TableHead>
+                    <TableBody>{this.getRows()}</TableBody>
                 </Table>
             </Paper>
         );
     }
+
+    getHead = () => <TableRow>{[
+        "Дата",
+        ...this.props.providers
+    ].map((value) => <TableCell key={value}>{value}</TableCell>)}</TableRow>;
+
+    getRows = () => {
+        const {forecast} = this.props;
+        return Object.keys(forecast).map(date => <TableRow key={date}>{this.getDateRow(date)}</TableRow>);
+    }
+
+    getDateRow = (date) => {
+        return [
+            moment(date).format("dddd L"),
+            ...this.props.providers.map(provider => <Weather {...this.props.forecast[date][provider]} />)
+        ].map((value,idx)=> <TableCell key={idx}>{value}</TableCell>);
+    }
+
 }
-const mapStateToProps = (state) => {
+const mapStateToProps = ({forecast,providers}) => {
     return {
-        forecast: state.forecast || [],
-        providers: state.providers || []
+        forecast,
+        providers
     }
 };
 Forecast = connect(mapStateToProps)(Forecast);

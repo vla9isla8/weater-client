@@ -1,18 +1,24 @@
 const searchForecast = (state = [], action) => {
-    let payload = action.payload;
     switch (action.type) {
-        case 'SEARCH_FORECAST':
+        case 'SET_FORECAST':
             return {
                 ...state,
-                loading: action.loading,
-                forecastError: action.error && payload ? payload.error : null,
-                forecast: action.forecast
+                forecast: action.payload
             };
-        case "SEARCH_PROVIDERS":
+        case "SET_PROVIDERS":
             return {
                 ...state,
-                providerError: action.error && payload ? payload.error : null,
-                providers: action.providers
+                providers: action.payload
+            };
+        case "SET_ERROR":
+            return {
+                ...state,
+                error: action.payload
+            };
+        case "SET_LOADING":
+            return {
+                ...state,
+                loading: action.payload
             };
         default:
             return state
